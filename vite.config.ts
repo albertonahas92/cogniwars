@@ -46,6 +46,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       workbox: {
         sourcemap: true,
+        maximumFileSizeToCacheInBytes: 4000000,
       },
     }),
   ],
