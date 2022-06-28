@@ -35,7 +35,7 @@ export var Landing: FC<Props> = function (props) {
       }}
     >
       <BrainWrapper sx={{ m: 2 }}>
-        <Brain />
+        <Brain orbit={true} />
       </BrainWrapper>
       <Typography
         sx={{ fontWeight: "400", fontSize: { md: "4em", xs: "3em" } }}

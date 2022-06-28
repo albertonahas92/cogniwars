@@ -108,18 +108,16 @@ export const GamePlay: FC<Props> = ({ display, onComplete }) => {
 
   return display ? (
     <>
-      {turn <= (challenge?.rounds || 10) && (
-        <Contaienr elevation={24}>
-          {challenge?.game &&
-            games[challenge?.game] &&
-            React.createElement(games[challenge?.game], {
-              level,
-              turn,
-              onRoundComplete,
-              onScoreUpdate,
-            })}
-        </Contaienr>
-      )}
+      <Contaienr elevation={24}>
+        {challenge?.game &&
+          games[challenge?.game] &&
+          React.createElement(games[challenge?.game], {
+            level,
+            turn,
+            onRoundComplete,
+            onScoreUpdate,
+          })}
+      </Contaienr>
       <Box sx={{ mt: 1 }}>
         <Typography color="text.secondary" sx={{ mt: 2 }} variant="body1">
           Score: <strong>{score}</strong>
