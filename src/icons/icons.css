@@ -1,0 +1,69 @@
+.doneOutline-1 {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 12px;
+}
+
+.plateBorder-1 {
+  fill: none;
+  stroke: currentColor;
+  stroke-miterlimit: 10;
+  stroke-width: 10px;
+}
+
+.logo-1 {
+  fill: #0d69d5;
+}
+.logo-2 {
+  fill: #3498da;
+}
+.logo-3 {
+  fill: #2ecb71;
+}
+.logo-4 {
+  fill: #27ad61;
+}
+.logo-5 {
+  fill: #28ad61;
+}
+.logo-6 {
+  fill: #2980b8;
+}
+
+#orbit {
+  transform-origin: center;
+}
+
+.brain-1 {
+  fill: none;
+  stroke: #2ecb71;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 8.06px;
+  stroke-dasharray: 30.29 30.29;
+}
+.brain-2 {
+  fill: #0d69d5;
+}
+.brain-3 {
+  fill: #3498da;
+}
+.brain-4 {
+  fill: #094b8c;
+}
+.brain-5 {
+  fill: #f6f6f6;
+}
+
+.path-2 {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 14px;
+}
+.path-3 {
+  fill: #fff;
+}
