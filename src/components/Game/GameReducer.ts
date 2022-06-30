@@ -58,8 +58,11 @@ export const gameReducer = (
         submitted: false,
         correct: action.payload.accuracy === 1,
         accuracy:
-          (state.accuracy * state.turn + action.payload.accuracy) /
-          (state.turn + 1),
+          Math.round(
+            ((state.accuracy * state.turn + action.payload.accuracy) /
+              (state.turn + 1)) *
+              100
+          ) / 100,
         score:
           state.score +
           Math.max(action.payload.score, 0) +

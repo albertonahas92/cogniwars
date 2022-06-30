@@ -54,6 +54,7 @@ export const GameContainer = () => {
   const isGameDone = useMemo(
     () =>
       (players &&
+        players.length &&
         challenge &&
         challenge.id &&
         players.every((p) => p.turn >= (challenge.rounds || 10))) ||
@@ -61,6 +62,8 @@ export const GameContainer = () => {
       false,
     [players, challenge]
   )
+
+  console.log(players)
 
   const isMultiPlayer = useMemo<Boolean>(
     () => !!players && players.length > 1,

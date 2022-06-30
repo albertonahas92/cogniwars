@@ -22,8 +22,8 @@ export const PlayerChip: FC<Props> = ({ player, isWinning }) => {
         </Avatar>
       }
       label={`${player.displayName}: ${player?.timedScore || 0} | ${
-        player?.accuracy || 0
-      } / ${player.turn}`}
+        player.turn
+      }`}
     />
   )
 }

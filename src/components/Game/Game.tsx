@@ -62,127 +62,124 @@ export const Game: FC<Props> = ({
   const isAcceptRematch = challenge?.rematchRequested && !rematch
 
   return (
-    <>
-      <Container>
-        <Typography
-          component="h1"
-          variant="h2"
-          color="text.secondary"
-          sx={{ mb: 3 }}
-        >
-          Cogniwars
-        </Typography>
+    <Container>
+      <Typography
+        component="h1"
+        variant="h2"
+        color="text.secondary"
+        sx={{ mb: 3 }}
+      >
+        Cogniwars
+      </Typography>
 
-        {gameStatus !== "loading" ? (
-          <>
-            {gameStatus !== "finished" && (
-              <ChallengeInfo challenge={challenge} />
-            )}
-            {gameStatus &&
-              ["started", "waiting_others", "finished"].includes(gameStatus) &&
-              players &&
-              renderPlayers()}
-            {!challenge?.rematchRequested &&
-              !openOnBoarding &&
-              gameStatus !== "finished" && (
-                <Box sx={{ my: 2 }}>
-                  <GamePlay
-                    display={gameStatus !== "waiting"}
-                    onComplete={onComplete}
-                  />
-                </Box>
-              )}
-            {gameStatus === "waiting" && (
-              <Box sx={{ mt: 2 }}>
-                <Typography
-                  variant="h2"
-                  aria-label="waiting for players"
-                  color="primary.light"
-                  sx={{ fontWeight: 400, fontSize: "1.5rem" }}
-                >
-                  Waiting for players to join
-                </Typography>
-                <CircularProgress sx={{ my: 4 }} />
+      {gameStatus !== "loading" ? (
+        <>
+          {gameStatus !== "finished" && <ChallengeInfo challenge={challenge} />}
+          {gameStatus &&
+            ["started", "waiting_others", "finished"].includes(gameStatus) &&
+            players && <Box sx={{ mt: 2 }}>{renderPlayers()}</Box>}
+          {!challenge?.rematchRequested &&
+            !openOnBoarding &&
+            gameStatus !== "finished" && (
+              <Box sx={{ my: 2 }}>
+                <GamePlay
+                  display={gameStatus !== "waiting"}
+                  onComplete={onComplete}
+                />
               </Box>
             )}
-            {gameStatus === "waiting_others" && (
-              <Box sx={{ mb: 3 }}>
-                <Typography
-                  variant="h6"
-                  aria-label="waiting for players to finish"
-                  color="primary.light"
-                >
-                  Waiting for players to finish...
-                </Typography>
-              </Box>
-            )}
-            {gameStatus === "error" && (
-              <Alert sx={{ my: 4 }} severity="error">
-                {error}
-              </Alert>
-            )}
-            {gameStatus === "finished" && (
+          {gameStatus === "waiting" && (
+            <Box sx={{ mt: 2 }}>
+              <Typography
+                variant="h2"
+                aria-label="waiting for players"
+                color="primary.light"
+                sx={{ fontWeight: 400, fontSize: "1.5rem" }}
+              >
+                Waiting for players to join
+              </Typography>
+              <CircularProgress sx={{ my: 4 }} />
+            </Box>
+          )}
+          {gameStatus === "waiting_others" && (
+            <Box sx={{ mb: 3 }}>
+              <Typography
+                variant="h6"
+                aria-label="waiting for players to finish"
+                color="primary.light"
+              >
+                Waiting for players to finish...
+              </Typography>
+            </Box>
+          )}
+          {gameStatus === "error" && (
+            <Alert sx={{ my: 4 }} severity="error">
+              {error}
+            </Alert>
+          )}
+          {gameStatus === "finished" && (
+            <Typography
+              component="p"
+              variant="h4"
+              color="secondary"
+              sx={{ m: 3 }}
+            >
+              Game Over!
+            </Typography>
+          )}
+          {challenge?.rematchRequested && (
+            <>
               <Typography
                 component="p"
-                variant="h4"
-                color="secondary"
+                variant="h6"
+                color="primary.light"
                 sx={{ m: 3 }}
               >
-                Game Over!
+                Rematch request pending
               </Typography>
-            )}
-            {challenge?.rematchRequested && (
-              <>
-                <Typography
-                  component="p"
-                  variant="h6"
-                  color="primary.light"
-                  sx={{ m: 3 }}
-                >
-                  Rematch request pending
-                </Typography>
-                <CircularProgress sx={{ mb: 4 }} />
-              </>
-            )}
-          </>
-        ) : (
-          <Box sx={{ my: 5 }}>
-            <CircularProgress />
-          </Box>
-        )}
+              <CircularProgress sx={{ mb: 4 }} />
+            </>
+          )}
+        </>
+      ) : (
+        <Box sx={{ my: 5 }}>
+          <CircularProgress />
+        </Box>
+      )}
 
-        <Stack
-          spacing={2}
-          sx={{ justifyContent: "center", alignItems: "center" }}
-          direction="row"
-        >
-          {gameStatus === "finished" && players && (
-            <RematchButton
-              onClick={onClickRematch}
-              disabled={rematch || players?.length === 1}
-              pulsing={isAcceptRematch}
-            />
-          )}
-          {!openOnBoarding && (
-            <Button
-              variant="outlined"
-              color="error"
-              aria-label="leave"
-              onClick={onClickLeave}
-              endIcon={<ExitToAppIcon />}
-              sx={{ mt: 1 }}
-            >
-              {challenge?.id ? "Leave" : "Exit"}
-            </Button>
-          )}
-        </Stack>
-        <ChallengeDoneDialog
-          open={gameStatus === "finished" && !rematch}
-          onClose={onClickLeave}
-          onClickRematch={onClickRematch}
-          onClickPlayAgain={onClickPlayAgain}
-          players={players}
-        />
+      <Stack
+        spacing={2}
+        sx={{ justifyContent: "center", alignItems: "center" }}
+        direction="row"
+      >
+        {gameStatus === "finished" && players && (
+          <RematchButton
+            onClick={onClickRematch}
+            disabled={rematch || players?.length === 1}
+            pulsing={isAcceptRematch}
+          />
+        )}
+        {!openOnBoarding && (
+          <Button
+            variant="outlined"
+            color="error"
+            aria-label="leave"
+            onClick={onClickLeave}
+            endIcon={<ExitToAppIcon />}
+            sx={{ mt: 1 }}
+          >
+            {challenge?.id ? "Leave" : "Exit"}
+          </Button>
+        )}
+      </Stack>
+      <ChallengeDoneDialog
+        open={gameStatus === "finished" && !rematch}
+        onClose={onClickLeave}
+        onClickRematch={onClickRematch}
+        onClickPlayAgain={onClickPlayAgain}
+        players={players}
+      />
+      {challenge && (
         <ModalDialog
           open={openOnBoarding}
           onClose={() => setOpenOnBoarding(false)}
@@ -193,8 +190,8 @@ export const Game: FC<Props> = ({
             onReady={() => setOpenOnBoarding(false)}
           />
         </ModalDialog>
-      </Container>
-    </>
+      )}
+    </Container>
   )
 }
 
