@@ -5,13 +5,14 @@ import { ButtonBase } from "@mui/material"
 export const DIR_RIGHT = true
 export const DIR_LEFT = false
 
-const ArrowShape = styled(ButtonBase)<{
+export const ArrowShape = styled(ButtonBase)<{
   direction: Boolean
 }>(
-  ({ direction }) => `
+  ({ theme, direction }) => `
   position:absolute;
   top:40vh;
-  padding:50px;
+  padding:${theme.spacing(6)};
+  border-radius:50%;
 ${direction === DIR_RIGHT ? `right:0` : `left:0`};
 & i{
     border: solid black;
@@ -26,6 +27,7 @@ ${direction === DIR_RIGHT ? `right:0` : `left:0`};
 export const Arrow = ({
   direction,
   onClick,
+  ...props
 }: {
   direction: boolean
   onClick: () => void
@@ -37,6 +39,7 @@ export const Arrow = ({
       direction={direction}
       tabIndex={0}
       onClick={onClick}
+      {...props}
     >
       <i></i>
     </ArrowShape>

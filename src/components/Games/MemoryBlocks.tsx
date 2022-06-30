@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { GameBoard } from "../../molecules/GameBoard/GameBoard"
 import { getBoardDimensions, getSquaresCount } from "../../utils/boardHelpers"
@@ -19,10 +20,12 @@ export const MemoryBlocks: FC<GameProps> = ({
   const boardDimensions = useMemo(() => getBoardDimensions(level), [level])
 
   const checkStatus = () => {
-    const isPerfect = clickedSqaures
-      .sort()
-      .every((v, i) => v === activeSqures.sort()[i])
-    onRoundComplete(isPerfect, score)
+    // const isPerfect = clickedSqaures
+    //   .sort()
+    //   .every((v, i) => v === activeSqures.sort()[i])
+    const accuracy =
+      _.intersection(clickedSqaures, activeSqures).length / activeSqures.length
+    onRoundComplete(accuracy, score)
   }
 
   useEffect(() => {
@@ -87,6 +90,6 @@ export const MemoryBlocks: FC<GameProps> = ({
 export interface GameProps {
   turn: number
   level: number
-  onRoundComplete: (isCorrect: boolean, score?: number) => void
+  onRoundComplete: (accuracy: number, score?: number) => void
   onScoreUpdate?: (score?: number) => void
 }

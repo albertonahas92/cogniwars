@@ -101,7 +101,7 @@ export const GameContainer = () => {
   }, [challenge, isGameDone, onLeaveConfirmed, players])
 
   const onComplete = useCallback(
-    (turn?: number, score?: number, accuracy?: number) => {
+    (turn?: number, accuracy?: number, score?: number) => {
       console.log("onComplete", turn, accuracy, score)
 
       if (!user?.feedback) {

@@ -24,8 +24,8 @@ export const DotsHunter: FC<GameProps> = ({ turn, level, onRoundComplete }) => {
     setTimeout(checkStatus, 300)
   }
   const checkStatus = () => {
-    const isPerfect = clickedSqaure === activeSqure
-    onRoundComplete(isPerfect, score)
+    const isCorrect = clickedSqaure === activeSqure
+    onRoundComplete(Number(isCorrect), score)
   }
 
   useEffect(() => {

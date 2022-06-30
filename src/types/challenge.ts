@@ -1,5 +1,5 @@
 import firebase from "../config"
-import { GameType } from "../molecules/ChallengeSetupDialog/ChallengeSetupDialog"
+import { GameType } from "../utils/helpers"
 
 export type ChallengeStatus = "pending" | "started" | "finished" | "aborted"
 

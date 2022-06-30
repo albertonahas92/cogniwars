@@ -28,7 +28,7 @@ export const MemoryPath: FC<GameProps> = ({ turn, level, onRoundComplete }) => {
     const isPerfect = clickedSqaures
       .sort()
       .every((v, i) => v === activeSqures.sort()[i])
-    onRoundComplete(isPerfect, score)
+    onRoundComplete(Number(isPerfect), score)
   }
 
   useEffect(() => {

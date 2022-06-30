@@ -31,6 +31,7 @@ export const Immigration: FC<GameProps> = ({
   const [finished, setFinished] = useState(false)
 
   const scoreRef = useRef(0)
+  const accuracyRef = useRef(0)
   const shapesRef = useRef<number[][]>([])
 
   const boardDimensions = useMemo(
@@ -58,7 +59,7 @@ export const Immigration: FC<GameProps> = ({
 
   const finish = () => {
     setFinished(true)
-    onRoundComplete(false, scoreRef.current)
+    onRoundComplete(accuracyRef.current / index, scoreRef.current)
   }
 
   useEffect(() => {
@@ -82,11 +83,13 @@ export const Immigration: FC<GameProps> = ({
   const onClickShape = (shape: number, index: number) => {
     setClickedShape({ shape, index })
     setShowClickedShape(true)
-    const bonus = isImmigration(shape)
-      ? 100 * shapesCount
-      : -1 * 100 * shapesCount
+    const correct = isImmigration(shape)
+    const bonus = correct ? 100 * shapesCount : -1 * 100 * shapesCount
     scoreRef.current = Math.max(scoreRef.current + bonus, 0)
     setScore(scoreRef.current)
+    accuracyRef.current = correct
+      ? accuracyRef.current + 1
+      : accuracyRef.current
   }
 
   const isImmigration = (shape: number) =>

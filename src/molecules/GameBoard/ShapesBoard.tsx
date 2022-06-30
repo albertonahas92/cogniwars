@@ -1,6 +1,6 @@
 import { styled } from "@mui/system"
 import { keyframes } from "@emotion/react"
-import { ButtonBase } from "@mui/material"
+import { Box, ButtonBase } from "@mui/material"
 import { getBlockSizeStyle } from "../../utils/boardHelpers"
 
 export const nudge = keyframes`
@@ -16,14 +16,14 @@ export const nudge = keyframes`
   transform: rotate(-7deg);
 }`
 
-export const ShapesBoard = styled("div")`
+export const ShapesBoard = styled(Box)`
   box-sizing: border-box;
   line-height: 0;
   display: flex;
   justify-content: center;
   transition: all 500ms;
 `
-export const ShapesWrapper = styled("div")`
+export const ShapesWrapper = styled(Box)`
   display: flex;
 `
 

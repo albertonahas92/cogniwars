@@ -34,7 +34,7 @@ type GameAction =
   | {
       type: GameActionType.ANSWER
       payload: {
-        isCorrect: boolean
+        accuracy: number
         score: number
         time?: number
       }
@@ -56,14 +56,17 @@ export const gameReducer = (
         ...state,
         answered: true,
         submitted: false,
-        correct: action.payload.isCorrect,
-        accuracy: state.accuracy + Number(action.payload.isCorrect),
+        correct: action.payload.accuracy === 1,
+        accuracy:
+          (state.accuracy * state.turn + action.payload.accuracy) /
+          (state.turn + 1),
         score:
           state.score +
           Math.max(action.payload.score, 0) +
-          (action.payload.isCorrect ? bonus : 0),
+          (action.payload.accuracy === 1 ? bonus : 0),
         level:
-          state.level + (action.payload.isCorrect ? 1 : -1) || startingLevel,
+          state.level + (action.payload.accuracy === 1 ? 1 : -1) ||
+          startingLevel,
         time: action.payload.time || state.time,
       }
     case GameActionType.SCORE:

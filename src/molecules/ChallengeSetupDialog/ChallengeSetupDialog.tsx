@@ -15,91 +15,13 @@ import * as Yup from "yup"
 import { Box } from "@mui/system"
 import { ChallengeSetup } from "../../types/challenge"
 import React, { useMemo } from "react"
-import { Sort } from "../../icons/GamesIcons/sort"
-import { Blocks } from "../../icons/GamesIcons/blocks"
-import { Unique } from "../../icons/GamesIcons/unique"
-import { Path } from "../../icons/GamesIcons/path"
-import { Math } from "../../icons/GamesIcons/math"
-import { QuestionMarkRounded, SvgIconComponent } from "@mui/icons-material"
-import { Dot } from "../../icons/GamesIcons/dot"
-import { Immigration } from "../../icons/GamesIcons/immigration"
+import { GameItem, gamesData } from "../../utils/helpers"
 
 export interface LevelDialogProps {
   open: boolean
   setup?: ChallengeSetup
   onClose: (setup?: ChallengeSetup) => void
 }
-
-export const GameTypes = [
-  "Random",
-  "MemoryBlocks",
-  "QuickMath",
-  "MemoryPath",
-  "Sorter",
-  "Unique",
-  "DotsHunter",
-  "Immigration",
-] as const
-export type GameType = typeof GameTypes[number]
-
-type GameItem = {
-  key: GameType
-  name: string
-  rounds: number
-  timeout?: number
-  Icon?: SvgIconComponent
-}
-
-export const gamesData: GameItem[] = [
-  {
-    key: "Random",
-    name: "Random",
-    Icon: QuestionMarkRounded,
-    rounds: 10,
-  },
-  {
-    key: "MemoryBlocks",
-    name: "Memory Blocks",
-    Icon: Blocks,
-    rounds: 10,
-  },
-  {
-    key: "QuickMath",
-    name: "Quick Math",
-    Icon: Math,
-    rounds: 1,
-  },
-  {
-    key: "MemoryPath",
-    name: "Memory Path",
-    Icon: Path,
-    rounds: 10,
-  },
-  {
-    key: "Sorter",
-    name: "Sorter",
-    Icon: Sort,
-    rounds: 10,
-  },
-  {
-    key: "DotsHunter",
-    name: "Dots Hunter",
-    Icon: Dot,
-    rounds: 10,
-  },
-  {
-    key: "Unique",
-    name: "Unique",
-    Icon: Unique,
-    rounds: 1,
-  },
-  {
-    key: "Immigration",
-    name: "Immigration",
-    Icon: Immigration,
-    rounds: 1,
-  },
-]
 
 const GamesContainer = styled("div")`
   display: flex;

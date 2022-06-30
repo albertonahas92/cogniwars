@@ -33,6 +33,7 @@ export const Unique: FC<GameProps> = ({
   const [currentLevel, setCurrentLevel] = useState<number>(level)
 
   const scoreRef = useRef(0)
+  const accuracyRef = useRef(0)
 
   const boardDimensions = useMemo(
     () => getBoardDimensions(currentLevel),
@@ -51,7 +52,7 @@ export const Unique: FC<GameProps> = ({
   }
 
   const finish = () => {
-    onRoundComplete(false, 0)
+    onRoundComplete(accuracyRef.current / index, 0)
   }
 
   useEffect(() => {
@@ -74,8 +75,12 @@ export const Unique: FC<GameProps> = ({
   const onClickShape = (shape: number, index: number) => {
     setClickedShape({ shape, index })
     setShowClickedShape(true)
-    const bonus = isUnique(shape) ? 100 * shapesCount : -1 * 100 * shapesCount
+    const correct = isUnique(shape)
+    const bonus = correct ? 100 * shapesCount : -1 * 100 * shapesCount
     scoreRef.current = Math.max(scoreRef.current + bonus, 0)
+    accuracyRef.current = correct
+      ? accuracyRef.current + 1
+      : accuracyRef.current
     setScore(scoreRef.current)
   }
 

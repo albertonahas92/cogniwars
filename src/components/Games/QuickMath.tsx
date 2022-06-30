@@ -25,6 +25,7 @@ export const QuickMath: FC<GameProps> = ({
   })
   const [index, setIndex] = useState(0)
   const [currentLevel, setCurrentLevel] = useState<number>(level)
+  const accuracyRef = useRef(0)
 
   const getLevelDigits = (lv: number) =>
     STARTING_DIGITS + Math.floor(Math.sqrt(lv) - 1)
@@ -48,6 +49,8 @@ export const QuickMath: FC<GameProps> = ({
     const roundScore = getRoundScore()
     onScoreUpdate?.(roundScore)
     roundScore > 0 && setCurrentLevel((l) => l + 1)
+    accuracyRef.current =
+      roundScore > 0 ? accuracyRef.current + 1 : accuracyRef.current
     setTimeout(onAnswer, 200)
   }
 
@@ -58,7 +61,7 @@ export const QuickMath: FC<GameProps> = ({
   }
 
   const finish = () => {
-    onRoundComplete(false, 0)
+    onRoundComplete(accuracyRef.current / index, 0)
   }
 
   const setGuessVal = (val: (number: string) => string) => {
@@ -74,7 +77,12 @@ export const QuickMath: FC<GameProps> = ({
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Timer active={true} endtime={45} onTimerStop={finish}></Timer>
+      <Timer
+        active={true}
+        countdown={true}
+        endtime={45}
+        onTimerStop={finish}
+      ></Timer>
       <div>
         <div className="wrapper">
           <p style={{ fontSize: "3em", color: "#666" }}>

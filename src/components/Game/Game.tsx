@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { FC, useMemo, useState } from "react"
 
 import _ from "lodash"
 import {
@@ -18,6 +18,8 @@ import { GamePlay } from "./GamePlay/GamePlay"
 import { RematchButton } from "../../atoms/RematchButton/RematchButton"
 import ChallengeInfo from "../../molecules/ChallengeInfo/ChallengeInfo"
 import { ChallengeDoneDialog } from "../../molecules/ChallengeDoneDialog/ChallengeDoneDialog"
+import ChallengeOnboarding from "../../molecules/ChallengeOnboarding/ChallengeOnboarding"
+import ModalDialog from "../../molecules/ModalDialog/ModalDialog"
 
 export type GameStatus =
   | "loading"
@@ -39,6 +41,8 @@ export const Game: FC<Props> = ({
   rematch,
   error,
 }) => {
+  const [openOnBoarding, setOpenOnBoarding] = useState(true)
+
   const maxScore = useMemo(() => {
     if (!players || players.length < 2) return user?.displayName
     return _.maxBy(players, "timedScore")?.displayName
@@ -78,14 +82,16 @@ export const Game: FC<Props> = ({
               ["started", "waiting_others", "finished"].includes(gameStatus) &&
               players &&
               renderPlayers()}
-            {!challenge?.rematchRequested && gameStatus !== "finished" && (
-              <Box sx={{ my: 2 }}>
-                <GamePlay
-                  display={gameStatus !== "waiting"}
-                  onComplete={onComplete}
-                />
-              </Box>
-            )}
+            {!challenge?.rematchRequested &&
+              !openOnBoarding &&
+              gameStatus !== "finished" && (
+                <Box sx={{ my: 2 }}>
+                  <GamePlay
+                    display={gameStatus !== "waiting"}
+                    onComplete={onComplete}
+                  />
+                </Box>
+              )}
             {gameStatus === "waiting" && (
               <Box sx={{ mt: 2 }}>
                 <Typography
@@ -157,15 +163,18 @@ export const Game: FC<Props> = ({
               pulsing={isAcceptRematch}
             />
           )}
-          <Button
-            variant="outlined"
-            color="error"
-            aria-label="leave"
-            onClick={onClickLeave}
-            endIcon={<ExitToAppIcon />}
-          >
-            {challenge?.id ? "Leave" : "Exit"}
-          </Button>
+          {!openOnBoarding && (
+            <Button
+              variant="outlined"
+              color="error"
+              aria-label="leave"
+              onClick={onClickLeave}
+              endIcon={<ExitToAppIcon />}
+              sx={{ mt: 1 }}
+            >
+              {challenge?.id ? "Leave" : "Exit"}
+            </Button>
+          )}
         </Stack>
         <ChallengeDoneDialog
           open={gameStatus === "finished" && !rematch}
@@ -174,6 +183,16 @@ export const Game: FC<Props> = ({
           onClickPlayAgain={onClickPlayAgain}
           players={players}
         />
+        <ModalDialog
+          open={openOnBoarding}
+          onClose={() => setOpenOnBoarding(false)}
+          maxWidth="xs"
+        >
+          <ChallengeOnboarding
+            challenge={challenge}
+            onReady={() => setOpenOnBoarding(false)}
+          />
+        </ModalDialog>
       </Container>
     </>
   )

@@ -1,10 +1,108 @@
 /* eslint-disable no-mixed-operators */
 import { MedalType } from "../icons/Medal/Medal"
-
+import { Sort } from "../icons/GamesIcons/sort"
+import { Blocks } from "../icons/GamesIcons/blocks"
+import { Unique } from "../icons/GamesIcons/unique"
+import { Path } from "../icons/GamesIcons/path"
+import { Math as MathIcon } from "../icons/GamesIcons/math"
+import { QuestionMarkRounded, SvgIconComponent } from "@mui/icons-material"
+import { Dot } from "../icons/GamesIcons/dot"
+import { Immigration } from "../icons/GamesIcons/immigration"
 // const wikipediaURL =
 //   "https://en.wikipedia.org/w/api.php?format=json&action=query&origin=*&prop=extracts&exintro&explaintext&redirects=1&titles="
 
 const avatarURL = "https://avatars.dicebear.com/api/identicon/"
+
+export const GameTypes = [
+  "Random",
+  "MemoryBlocks",
+  "QuickMath",
+  "MemoryPath",
+  "Sorter",
+  "Unique",
+  "DotsHunter",
+  "Immigration",
+] as const
+export type GameType = typeof GameTypes[number]
+
+export type GameItem = {
+  key: GameType
+  name: string
+  rounds: number
+  timeout?: number
+  Icon?: SvgIconComponent
+  instructions?: string[]
+  startingLevel?: number
+}
+
+export const gamesData: GameItem[] = [
+  {
+    key: "Random",
+    name: "Random",
+    Icon: QuestionMarkRounded,
+    rounds: 10,
+  },
+  {
+    key: "MemoryBlocks",
+    name: "Memory Blocks",
+    Icon: Blocks,
+    rounds: 10,
+    instructions: [
+      "Memorize the white blocks when they show and click them after they disappear",
+    ],
+  },
+  {
+    key: "QuickMath",
+    name: "Quick Math",
+    Icon: MathIcon,
+    rounds: 1,
+    instructions: [
+      "Solve as many euqations as you can correctly before the time runs out",
+    ],
+  },
+  {
+    key: "MemoryPath",
+    name: "Memory Path",
+    Icon: Path,
+    rounds: 10,
+    instructions: ["Click the blocks as they appeared in the same order"],
+  },
+  {
+    key: "Sorter",
+    name: "Sorter",
+    Icon: Sort,
+    rounds: 1,
+    instructions: [
+      "Click the same direction of the previous shape if it's the same or the oppiste direction if it's different",
+    ],
+  },
+  {
+    key: "DotsHunter",
+    name: "Dots Hunter",
+    Icon: Dot,
+    rounds: 10,
+    instructions: ["Observe the last flashing square and click it"],
+    startingLevel: 5,
+  },
+  {
+    key: "Unique",
+    name: "Unique",
+    Icon: Unique,
+    rounds: 1,
+    instructions: [
+      "Find the odd one out among the shapes before the time runs out",
+    ],
+  },
+  {
+    key: "Immigration",
+    name: "Immigration",
+    Icon: Immigration,
+    rounds: 1,
+    instructions: [
+      "Click in the direction of the majority of birds before the time runs out",
+    ],
+  },
+]
 
 export const getAvatarURL = () => {
   const seed = Math.round(Math.random() * 99999)
@@ -54,7 +152,7 @@ export const getEval = (accuracy: number) => {
 }
 
 export const getLv = (xp?: number) => {
-  const factor = 150
+  const factor = 15000
   let n = factor,
     lv = 1
 

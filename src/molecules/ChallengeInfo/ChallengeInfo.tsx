@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Typography } from "@mui/material"
 import { styled } from "@mui/system"
 import { Challenge } from "../../types/challenge"
-import { gamesData } from "../ChallengeSetupDialog/ChallengeSetupDialog"
+import { gamesData } from "../../utils/helpers"
 
 const Wrapper = styled("div")(
   ({ theme }) => `

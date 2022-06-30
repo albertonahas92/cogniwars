@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux"
 import {
   ChallengeSetupDialog,
   defaultChallengeSetup,
-  GameTypes,
 } from "../../molecules/ChallengeSetupDialog/ChallengeSetupDialog"
 import { setChallengeSetup } from "../../store/challengeSlice"
 import { ChallengeSetup } from "../../types/challenge"
@@ -23,6 +22,7 @@ import { Container } from "@mui/system"
 import { MainMenuOption } from "./partials/MainMenuOption"
 import { Brain } from "../../icons/Brain"
 import _ from "lodash"
+import { GameTypes } from "../../utils/helpers"
 
 export var MainMenu: FC<Props> = function (props) {
   const navigate = useNavigate()

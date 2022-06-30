@@ -17,6 +17,8 @@ import { QuickMath } from "../../Games/QuickMath"
 import { DotsHunter } from "../../Games/DotsHunter"
 import { Unique } from "../../Games/Unique"
 import { Immigration } from "../../Games/Immigration"
+import { Sorter } from "../../Games/Sorter"
+import { gamesData } from "../../../utils/helpers"
 
 const Contaienr = styled(Paper)(
   ({ theme }) => `
@@ -37,18 +39,21 @@ const games = {
   DotsHunter: DotsHunter,
   Unique: Unique,
   Immigration: Immigration,
-  Sorter: "",
+  Sorter: Sorter,
   Random: "",
 }
 
 export const GamePlay: FC<Props> = ({ display, onComplete }) => {
+  const challenge = useSelector(challengeSelector)
+  const startingLevel = gamesData.find(
+    (game) => game.key === challenge?.game
+  )?.startingLevel
   const [{ turn, score, level, accuracy, answered, submitted }, dispatch] =
     useReducer(gameReducer, {
       ...initialGameState,
+      level: startingLevel || initialGameState.level,
     })
-
   const user = useSelector(userSelector)
-  const challenge = useSelector(challengeSelector)
   const { writeScore } = useScores()
 
   const onScoreUpdate = useCallback(
@@ -64,11 +69,11 @@ export const GamePlay: FC<Props> = ({ display, onComplete }) => {
     []
   )
   const onRoundComplete = useCallback(
-    (isCorrect: boolean, score?: number) => {
+    (accuracy: number, score?: number) => {
       dispatch({
         type: GameActionType.ANSWER,
         payload: {
-          isCorrect,
+          accuracy: Math.round(accuracy * 100) / 100,
           score: score || 0,
         },
       })
@@ -84,7 +89,7 @@ export const GamePlay: FC<Props> = ({ display, onComplete }) => {
 
   useEffect(() => {
     if (challenge && answered && turn === challenge.rounds) {
-      onComplete?.(turn, score)
+      onComplete?.(turn, accuracy, score)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answered, turn])
@@ -104,7 +109,7 @@ export const GamePlay: FC<Props> = ({ display, onComplete }) => {
       type: GameActionType.SUBMIT,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, turn, answered, submitted, score, challenge])
+  }, [user, turn, answered, submitted, score, accuracy, challenge])
 
   return display ? (
     <>
@@ -138,5 +143,5 @@ export const GamePlay: FC<Props> = ({ display, onComplete }) => {
 }
 interface Props {
   display?: boolean
-  onComplete?: (turn?: number, score?: number) => void
+  onComplete?: (turn?: number, accuracy?: number, score?: number) => void
 }
