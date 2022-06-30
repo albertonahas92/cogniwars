@@ -53,6 +53,7 @@ export const Sorter: FC<GameProps> = ({
 }) => {
   const scoreRef = useRef(0)
   const accuracyRef = useRef(0)
+  const indexRef = useRef(0)
 
   const [multiplier, setMultiplier] = useState(1)
   const [index, setIndex] = useState(turn)
@@ -132,13 +133,14 @@ export const Sorter: FC<GameProps> = ({
       onScoreUpdate?.(scoreRef.current)
     }
     setPrevShape(shape)
+    indexRef.current = index
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index])
 
   const finish = () => {
     setFinished(true)
     window.removeEventListener("keydown", onKeyDown)
-    onRoundComplete(accuracyRef.current / index, scoreRef.current)
+    onRoundComplete(accuracyRef.current / indexRef.current, scoreRef.current)
   }
 
   return (
@@ -147,7 +149,7 @@ export const Sorter: FC<GameProps> = ({
         <Timer
           active={true}
           countdown={true}
-          endtime={30}
+          endtime={10}
           onTimerStop={finish}
         ></Timer>
       )}

@@ -63,8 +63,6 @@ export const GameContainer = () => {
     [players, challenge]
   )
 
-  console.log(players)
-
   const isMultiPlayer = useMemo<Boolean>(
     () => !!players && players.length > 1,
     [players]
@@ -105,8 +103,6 @@ export const GameContainer = () => {
 
   const onComplete = useCallback(
     (turn?: number, accuracy?: number, score?: number) => {
-      console.log("onComplete", turn, accuracy, score)
-
       if (!user?.feedback) {
         setTimeout(() => {
           dispatch(setFeedback(true))

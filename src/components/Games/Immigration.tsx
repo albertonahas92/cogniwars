@@ -24,6 +24,7 @@ export const Immigration: FC<GameProps> = ({
 }) => {
   const [currentLevel, setCurrentLevel] = useState(level)
   const [index, setIndex] = useState(0)
+  const indexRef = useRef(0)
   const [shapes, setShapes] = useState<number[][]>([])
   const [clickedShape, setClickedShape] = useState({ index: -1, shape: -1 })
   const [showClickedShape, setShowClickedShape] = useState(false)
@@ -59,7 +60,7 @@ export const Immigration: FC<GameProps> = ({
 
   const finish = () => {
     setFinished(true)
-    onRoundComplete(accuracyRef.current / index, scoreRef.current)
+    onRoundComplete(accuracyRef.current / indexRef.current, scoreRef.current)
   }
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export const Immigration: FC<GameProps> = ({
     )
     shapesRef.current = board
     setShapes(board)
+    indexRef.current = index
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index])
 

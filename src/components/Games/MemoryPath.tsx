@@ -70,8 +70,6 @@ export const MemoryPath: FC<GameProps> = ({ turn, level, onRoundComplete }) => {
       flashes.current++
     }, TIMER / (sqauresCount + 1))
     return () => {
-      console.log("cleanup")
-
       clearInterval(flashesInterval)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

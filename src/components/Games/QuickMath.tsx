@@ -25,6 +25,7 @@ export const QuickMath: FC<GameProps> = ({
   })
   const [index, setIndex] = useState(0)
   const [currentLevel, setCurrentLevel] = useState<number>(level)
+  const indexRef = useRef(0)
   const accuracyRef = useRef(0)
 
   const getLevelDigits = (lv: number) =>
@@ -41,6 +42,7 @@ export const QuickMath: FC<GameProps> = ({
     const res = plus ? left + right : left - right
     setEquation({ left, plus, right, res })
     equationResRef.current = res
+    indexRef.current = index
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index])
 
@@ -61,7 +63,7 @@ export const QuickMath: FC<GameProps> = ({
   }
 
   const finish = () => {
-    onRoundComplete(accuracyRef.current / index, 0)
+    onRoundComplete(accuracyRef.current / indexRef.current, 0)
   }
 
   const setGuessVal = (val: (number: string) => string) => {

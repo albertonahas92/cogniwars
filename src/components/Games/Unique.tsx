@@ -34,6 +34,7 @@ export const Unique: FC<GameProps> = ({
 
   const scoreRef = useRef(0)
   const accuracyRef = useRef(0)
+  const indexRef = useRef(0)
 
   const boardDimensions = useMemo(
     () => getBoardDimensions(currentLevel),
@@ -52,7 +53,7 @@ export const Unique: FC<GameProps> = ({
   }
 
   const finish = () => {
-    onRoundComplete(accuracyRef.current / index, 0)
+    onRoundComplete(accuracyRef.current / indexRef.current, 0)
   }
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export const Unique: FC<GameProps> = ({
       SHAPES_COUNT
     )
     setShapes(board)
+    indexRef.current = index
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index])
 

@@ -82,8 +82,6 @@ export const Numpad = ({ setNumber, onOkClickEnter }: Props) => {
   }
 
   const onKeyDown = (e: any) => {
-    console.log(e.which)
-
     const key = e.which
     if (key >= 48 && key <= 57) {
       // the enter key code or right arrow
